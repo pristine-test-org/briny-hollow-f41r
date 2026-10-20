@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How the list works · Briny Hollow</title>
+    <style>
+      :root { font-family: system-ui, sans-serif; color: #1c1c1c; background: #fafaf7; --accent: #2f7d4f; }
+      body { margin: 0; }
+      header, footer { max-width: 44rem; margin: 0 auto; padding: 1.25rem 1rem; }
+      header { display: flex; justify-content: space-between; align-items: center; }
+      header a { color: var(--accent); }
+      .mark { font-weight: 700; color: var(--accent); }
+      footer { color: #777; font-size: 0.9rem; border-top: 1px solid #e5e5e0; }
+      main { max-width: 44rem; margin: 0 auto; padding: 3rem 0; }
+
+      /* Intentional, for Impeccable's test drive: gradient text on the heading. */
+      h1 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        margin: 0 1rem 1rem;
+        background: linear-gradient(90deg, #2f7d4f, #7b3fe4);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* Intentional, for Impeccable's test drive: body text flush with the viewport edges (no side padding). */
+      .lead { font-size: 1.15rem; line-height: 1.5; margin: 0 0 1rem; }
+      .steps { line-height: 1.8; margin: 0 1rem; }
+
+      /* Intentional, for Impeccable's test drive: hard-coded colour outside the palette. */
+      .steps li::marker { color: #e0388f; font-weight: 700; }
+
+      /* Intentional, for Impeccable's test drive: low-contrast text, light grey on the pale page. */
+      .note { color: #c9c9c4; line-height: 1.6; margin: 1rem 0; }
+
+      /* Intentional, for Impeccable's test drive: transition on a layout property (width). */
+      .progress { height: 0.5rem; background: #e5e5e0; border-radius: 999px; margin: 1.5rem 1rem 1rem; }
+      .progress span { display: block; height: 100%; width: 30%; background: var(--accent); border-radius: 999px; transition: width 0.3s; }
+      .progress:hover span { width: 100%; }
+
+      /* Intentional, for Impeccable's test drive: link text under the 11px floor. */
+      .small-link { font-size: 10px; color: var(--accent); margin: 0 1rem; }
+    </style>
+  </head>
+  <body hidden>
+    <header>
+      <span class="mark">Briny Hollow</span>
+      <a href="/">Back to the list</a>
+    </header>
+    <main>
+      <h1>How the list works</h1>
+      <p class="lead">Every item you add lands on one shared list, and everyone on your team sees it the moment it is saved.</p>
+      <ol class="steps">
+        <li>Add an item from the landing page.</li>
+        <li>Mark it done when the work is finished.</li>
+        <li>Finished items stay visible with a check mark.</li>
+      </ol>
+      <p class="note">Items are kept for as long as your account is active, and only signed-in people can read them.</p>
+      <div class="progress" aria-hidden="true"><span></span></div>
+      <a class="small-link" href="/">Return to the landing page</a>
+    </main>
+    <footer>Briny Hollow · one small list for the whole team</footer>
+    <script>
+      // Behind the sign-in like the landing page: a signed-out visitor goes to the customer login.
+      // Supabase keeps the session in local storage under sb-<project ref>-auth-token.
+      var signedIn = Object.keys(localStorage).some(function (k) { return /^sb-.*-auth-token$/.test(k); });
+      if (signedIn) document.body.hidden = false;
+      else location.replace("/login");
+    </script>
+  </body>
+</html>
